@@ -1,0 +1,23 @@
+{
+  "name": "think-mate",
+  "version": "1.0.0",
+  "description": "A friendly app to help you make those tough choices!",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm run --workspace=client dev",
+    "client:build": "npm run --workspace=client build",
+    "client:preview": "npm run client:build && npm run --workspace=client preview",
+    "client:lint": "npm run --workspace=client lint",
+    "server": "npm run --workspace=server start:dev"
+  },
+  "author": "John Sager",
+  "license": "ISC",
+  "workspaces": [
+    "./client",
+    "./server"
+  ],
+  "private": true,
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
