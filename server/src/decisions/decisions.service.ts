@@ -1,34 +1,44 @@
 import { Injectable } from '@nestjs/common';
+import { DecisionEntity } from './decision.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DecisionsService {
-  private decisions: Decision[] = [
-    {
-      id: '1',
-      title: 'Move to Seattle',
-      description:
-        'Considering a move to Seattle for better job opportunities.',
-      status: 'undecided',
-      score: 0,
-    },
-    {
-      id: '2',
-      title: 'Buy a new car',
-      description: 'Thinking about purchasing a new electric vehicle.',
-      status: 'decidedFor',
-      score: 85,
-    },
-    {
-      id: '3',
-      title: 'Start a new hobby',
-      description:
-        'Exploring options for a new hobby to pursue in my free time.',
-      status: 'decidedAgainst',
-      score: -20,
-    },
-  ];
+  constructor(
+    @InjectRepository(DecisionEntity)
+    private decisionRepository: Repository<DecisionEntity>,
+  ) {}
 
-  getAllDecisions(): Decision[] {
-    return this.decisions;
+  async findAll(): Promise<Decision[]> {
+    const dbDecisions = await this.decisionRepository.find();
+
+    return dbDecisions.map((dec) => this.toDecision(dec));
+  }
+
+  async findOne(id: string): Promise<Decision | null> {
+    const dbDecision = await this.decisionRepository.findOneBy({ id });
+
+    return dbDecision ? this.toDecision(dbDecision) : null;
+  }
+
+  async create(title: string): Promise<void> {
+    try {
+      const newDecision = this.decisionRepository.create({
+        title,
+        description: 'new thing',
+        score: 39,
+        status: 'undecided',
+      });
+      await this.decisionRepository.save(newDecision);
+    } catch (e: unknown) {
+      if (typeof e === 'string') throw new Error(e);
+    }
+  }
+
+  private toDecision(dbDec: DecisionEntity): Decision {
+    return {
+      ...dbDec,
+    };
   }
 }
