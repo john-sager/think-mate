@@ -1,4 +1,5 @@
 import { Button, Card } from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
 
 const decisionStatusMap: Record<DecisionStatus, string> = {
   decidedFor: "decided in favor of",
@@ -11,7 +12,7 @@ interface DecisionCardProps {
 }
 
 const DecisionCard = ({ decision }: DecisionCardProps) => {
-  const { title, status, score } = decision;
+  const { title, status, score, id } = decision;
 
   const isUndecided = status === "undecided";
   return (
@@ -21,9 +22,11 @@ const DecisionCard = ({ decision }: DecisionCardProps) => {
         <Card.Description>{`Currently ${decisionStatusMap[status]}, with a decision score of ${score}`}</Card.Description>
       </Card.Body>
       <Card.Footer>
-        <Button size="xs" variant={!isUndecided ? "surface" : "solid"}>
-          {isUndecided ? "Help me decide" : "View details"}
-        </Button>
+        <Link to="/decision/$decisionId" params={{ decisionId: id }}>
+          <Button size="xs" variant={!isUndecided ? "surface" : "solid"}>
+            {isUndecided ? "Help me decide" : "View details"}
+          </Button>
+        </Link>
       </Card.Footer>
     </Card.Root>
   );
