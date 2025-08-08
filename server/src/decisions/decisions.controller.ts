@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { DecisionsService } from './decisions.service';
 
 class CreateDecisionDto {
@@ -12,6 +12,10 @@ export class DecisionsController {
   @Get()
   async findAll(): Promise<Decision[]> {
     return await this.decisionsService.findAll();
+  }
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Decision | null> {
+    return await this.decisionsService.findOne(id);
   }
 
   @Post()

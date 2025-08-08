@@ -16,6 +16,6 @@ export const indexRoute = createRoute({
 
 export const decisionLabRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/decision/$decisionId",
+  path: "decision/$decisionId",
   component: DecisionLab,
 });
