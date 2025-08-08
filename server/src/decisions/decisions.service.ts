@@ -23,17 +23,13 @@ export class DecisionsService {
   }
 
   async create(title: string): Promise<void> {
-    try {
-      const newDecision = this.decisionRepository.create({
-        title,
-        description: 'new thing',
-        score: 39,
-        status: 'undecided',
-      });
-      await this.decisionRepository.save(newDecision);
-    } catch (e: unknown) {
-      if (typeof e === 'string') throw new Error(e);
-    }
+    const newDecision = this.decisionRepository.create({
+      title,
+      description: 'new thing',
+      score: 39,
+      status: 'undecided',
+    });
+    await this.decisionRepository.save(newDecision);
   }
 
   private toDecision(dbDec: DecisionEntity): Decision {
