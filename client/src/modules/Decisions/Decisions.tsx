@@ -1,7 +1,7 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import DecisionList from "../../components/DecisionList/DecisionList";
-
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useCreateDecision, useGetDecisions } from "./decisions.hooks";
+import { DecisionList } from "../../components/DecisionList/DecisionList";
+import { CreateDecisionButton } from "../../components/CreateDecisionButton/CreateDecisionButton";
 
 const Decisions = () => {
   const { decisions } = useGetDecisions();
@@ -10,17 +10,13 @@ const Decisions = () => {
   return (
     <Box>
       <Flex mb={4} justifyContent="center" alignItems="center">
-        <Text>Here are your decisions</Text>
-        <Button
-          ml={4}
-          size="xs"
-          colorPalette="blue"
-          onClick={() => createDecision("New Decision")}
-        >
-          Add new decision
-        </Button>
+        <Text mr={4}>Here are your decisions</Text>
+
+        <CreateDecisionButton
+          onSubmit={(newTitle) => createDecision({ title: newTitle })}
+        />
       </Flex>
-      <Flex justifyContent="center" flexDir="row">
+      <Flex justifyContent="center">
         <DecisionList decisions={decisions ?? []} />
       </Flex>
     </Box>

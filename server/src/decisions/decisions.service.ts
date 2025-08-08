@@ -25,8 +25,8 @@ export class DecisionsService {
   async create(title: string): Promise<void> {
     const newDecision = this.decisionRepository.create({
       title,
-      description: 'new thing',
-      score: 39,
+      description: '',
+      score: 0,
       status: 'undecided',
     });
     await this.decisionRepository.save(newDecision);

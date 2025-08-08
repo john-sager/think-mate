@@ -5,7 +5,7 @@ interface DecisionListProps {
   decisions: Decision[];
 }
 
-const DecisionList = ({ decisions }: DecisionListProps) => (
+export const DecisionList = ({ decisions }: DecisionListProps) => (
   <Box>
     <For each={decisions}>
       {(decision) => (
@@ -16,5 +16,3 @@ const DecisionList = ({ decisions }: DecisionListProps) => (
     </For>
   </Box>
 );
-
-export default DecisionList;
