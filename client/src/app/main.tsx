@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import ThemeProvider from "./components/ThemeProvider/ThemeProvider.tsx";
-import QueryProvider from "./components/QueryProvider/QueryProvider.tsx";
-import { AppRouter } from "./Router.tsx";
+import ThemeProvider from "./ThemeProvider/ThemeProvider.tsx";
+import QueryProvider from "./QueryProvider/QueryProvider.tsx";
+import { AppRouter } from "./AppRouter.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -1,20 +1,11 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import DecisionList from "../../components/DecisionList/DecisionList";
 
+import { useCreateDecision, useGetDecisions } from "./decisions.hooks";
+
 const Decisions = () => {
-  const { data: decisions } = useQuery<Decision[]>({
-    queryKey: ["decisions"],
-  });
-  const { mutate: createDecision } = useMutation({
-    mutationFn: (newTitle: string) => {
-      return fetch(`http://localhost:3000/decisions`, {
-        method: "POST",
-        body: JSON.stringify({ title: newTitle }),
-        headers: new Headers({ "Content-Type": "application/json" }),
-      });
-    },
-  });
+  const { decisions } = useGetDecisions();
+  const { createDecision } = useCreateDecision();
 
   return (
     <Box>

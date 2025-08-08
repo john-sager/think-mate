@@ -1,4 +1,4 @@
-import { decisionLabRoute } from "../../routes";
+import { decisionLabRoute } from "../../app/routes";
 
 const DecisionLab = () => {
   const { decisionId } = decisionLabRoute.useParams();
