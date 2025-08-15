@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { decisionLabRoute } from "../../app/routes";
+import DecisionCard from "../../components/DecisionCard/DecisionCard";
 
 const DecisionLab = () => {
   const { decisionId } = decisionLabRoute.useParams();
@@ -15,11 +16,9 @@ const DecisionLab = () => {
     },
   });
 
-  return (
-    <div>
-      Decision {decisionId} {JSON.stringify(data, null, 2)}
-    </div>
-  );
+  if (!data) return null;
+
+  return <DecisionCard decision={data} />;
 };
 
 export default DecisionLab;
