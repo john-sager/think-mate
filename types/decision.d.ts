@@ -7,3 +7,6 @@ interface Decision {
   status: DecisionStatus;
   score: number;
 }
+
+type CreateDecisionDto = Pick<Decision, "title">;
+type UpdateDecisionDto = Omit<Decision, "id">;

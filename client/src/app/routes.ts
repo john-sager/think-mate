@@ -1,8 +1,8 @@
 import { createRootRoute, createRoute } from "@tanstack/react-router";
 
-import AppLayout from "./AppLayout";
-import Decisions from "../modules/Decisions/Decisions";
+import DecisionDiscovery from "../modules/DecisionDiscovery/DecisionDiscovery";
 import DecisionLab from "../modules/DecisionLab/DecisionLab";
+import AppLayout from "./AppLayout";
 
 export const rootRoute = createRootRoute({
   component: AppLayout,
@@ -11,11 +11,11 @@ export const rootRoute = createRootRoute({
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Decisions,
+  component: DecisionDiscovery,
 });
 
 export const decisionLabRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/decision/$decisionId",
+  path: "decision/$decisionId",
   component: DecisionLab,
 });
