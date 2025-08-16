@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useCreateDecision, useGetDecisions } from "./decisions.hooks";
-import { DecisionList } from "../../components/DecisionList/DecisionList";
-import { CreateDecisionButton } from "../../components/CreateDecisionButton/CreateDecisionButton";
+import { DecisionList } from "./DecisionList/DecisionList";
+import { CreateDecisionButton } from "./CreateDecisionButton/CreateDecisionButton";
 
 const Decisions = () => {
   const { decisions } = useGetDecisions();
