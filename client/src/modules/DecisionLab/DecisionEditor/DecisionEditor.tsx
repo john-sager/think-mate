@@ -2,14 +2,16 @@ import { Button, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiEdit2, FiRotateCcw, FiSave, FiTrash } from "react-icons/fi";
 import { omitId } from "../../../utils";
+import { useUpdateDecision } from "../decisionLab.hooks";
 
 interface DecisionEditorProps {
   decision: Decision;
 }
 
 export const DecisionEditor = ({ decision }: DecisionEditorProps) => {
+  const { updateDecision } = useUpdateDecision(decision.id);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editedDec, setEditedDec] = useState<EditDecisionsDto>(
+  const [editedDec, setEditedDec] = useState<UpdateDecisionDto>(
     omitId(decision)
   );
 
@@ -27,10 +29,9 @@ export const DecisionEditor = ({ decision }: DecisionEditorProps) => {
   };
 
   const handleSave = () => {
+    updateDecision(editedDec);
     setIsEditing(false);
   };
-
-  console.dir(editedDec);
 
   return (
     <VStack>
