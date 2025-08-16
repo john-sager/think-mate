@@ -1,5 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+// const DECISION_STATUSES = [
+//   'undecided',
+//   'decidedFor',
+//   'decidedAgainst',
+// ] as const satisfies readonly DecisionStatus[];
+
 @Entity('decisions')
 export class DecisionEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -11,7 +17,11 @@ export class DecisionEntity {
   @Column()
   description: string;
 
-  @Column()
+  @Column(/*{
+    type: 'enum',
+    enum: DECISION_STATUSES,
+    default: 'undecided',
+  }*/)
   status: DecisionStatus;
 
   @Column()

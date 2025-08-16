@@ -32,6 +32,10 @@ export class DecisionsService {
     await this.decisionRepository.save(newDecision);
   }
 
+  async update(id: string, dec: UpdateDecisionDto): Promise<void> {
+    await this.decisionRepository.update(id, dec);
+  }
+
   private toDecision(dbDec: DecisionEntity): Decision {
     return {
       ...dbDec,

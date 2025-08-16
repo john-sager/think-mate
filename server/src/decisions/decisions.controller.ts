@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { DecisionsService } from './decisions.service';
 
 class CreateDecisionDto {
@@ -19,7 +19,15 @@ export class DecisionsController {
   }
 
   @Post()
-  async create(@Body() createDecDto: CreateDecisionDto): Promise<void> {
-    await this.decisionsService.create(createDecDto.title);
+  async create(@Body() dec: CreateDecisionDto): Promise<void> {
+    await this.decisionsService.create(dec.title);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() dec: UpdateDecisionDto,
+  ): Promise<void> {
+    await this.decisionsService.update(id, dec);
   }
 }
