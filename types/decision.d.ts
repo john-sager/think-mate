@@ -9,3 +9,4 @@ interface Decision {
 }
 
 type CreateDecisionDto = Pick<Decision, "title">;
+type EditDecisionsDto = Omit<Decision, "id">;
