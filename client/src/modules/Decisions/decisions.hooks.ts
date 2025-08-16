@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useGetDecisions = () => {
+export const useQueryDecisions = () => {
   const { data, ...rest } = useQuery<Decision[]>({
     queryKey: ["decisions"],
   });
