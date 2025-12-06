@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { decisionLabRoute } from "../../app/routes";
+import { decisionLabRoute } from "@/client/app/routes";
 import { DecisionEditor } from "./DecisionEditor/DecisionEditor";
 
 const DecisionLab = () => {

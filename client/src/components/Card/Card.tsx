@@ -1,5 +1,5 @@
 import { type ButtonProps, Card as ChakraCard } from "@chakra-ui/react";
-import type { LinkButtonProps } from "../LinkButton/LinkButton";
+import type { LinkButtonProps } from "@/client/components/LinkButton/LinkButton";
 
 type ButtonFooter =
   | React.ReactElement<ButtonProps | LinkButtonProps>
