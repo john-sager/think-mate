@@ -1,6 +1,4 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 const defaultQueryFn = async ({
   queryKey,

@@ -1,5 +1,5 @@
-import { Card } from "../../../components/Card/Card";
-import { LinkButton } from "../../../components/LinkButton/LinkButton";
+import { Card } from "@/client/components/Card/Card";
+import { LinkButton } from "@/client/components/LinkButton/LinkButton";
 
 const decisionStatusMap: Record<DecisionStatus, string> = {
   decidedFor: "decided in favor of",

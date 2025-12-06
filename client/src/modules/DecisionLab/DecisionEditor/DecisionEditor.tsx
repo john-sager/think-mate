@@ -1,8 +1,8 @@
 import { Button, Heading, HStack, Input, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiEdit2, FiRotateCcw, FiSave, FiTrash } from "react-icons/fi";
-import { omitId } from "../../../utils";
 import { useUpdateDecision } from "../decisionLab.hooks";
+import { omitId } from "@/client/utils";
 
 interface DecisionEditorProps {
   decision: Decision;
