@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { DecisionsController } from './decisions.controller';
 import { DecisionsService } from './decisions.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { DecisionEntity } from './decision.entity';
 
 @Module({

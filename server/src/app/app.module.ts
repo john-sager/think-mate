@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { DecisionsModule } from '../decisions/decisions.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { DecisionEntity } from 'src/decisions/decision.entity';
+import { DecisionsModule } from '@/server/decisions/decisions.module';
+import { DecisionEntity } from '@/server/decisions/decision.entity';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
