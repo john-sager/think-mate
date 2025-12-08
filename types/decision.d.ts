@@ -6,6 +6,7 @@ interface Decision {
   description: string;
   status: DecisionStatus;
   score: number;
+  factors: Factor[];
 }
 
 type FactorType = "pro" | "con";
@@ -20,3 +21,5 @@ interface Factor {
 
 type CreateDecisionDto = Pick<Decision, "title">;
 type UpdateDecisionDto = Omit<Decision, "id">;
+
+type UpdateFactorDto = Omit<Factor, "id">;

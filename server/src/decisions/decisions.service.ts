@@ -28,6 +28,7 @@ export class DecisionsService {
       description: '',
       score: 0,
       status: 'undecided',
+      factors: [],
     });
     await this.decisionRepository.save(newDecision);
   }
