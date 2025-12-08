@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateDecision = (id: string) => {
   const { mutate, ...mutation } = useMutation({
@@ -16,11 +16,32 @@ export const useUpdateDecision = (id: string) => {
 
 export const useQueryDecisionById = (id: string) => {
   return useQuery<Decision | null>({
-    queryKey: ["decision", id],
+    queryKey: ["decisions", id],
     queryFn: async () => {
       const response = await fetch(`http://localhost:3000/decisions/${id}`);
       const data = await response.json();
       return data;
     },
   });
+};
+
+export const useCreateFactor = (decisionId: string) => {
+  const queryClient = useQueryClient();
+  const { mutate: createFactor, ...rest } = useMutation({
+    mutationFn: (newFactor: CreateFactorDto) => {
+      return fetch(
+        `http://localhost:3000/decisions/${decisionId}/createFactor`,
+        {
+          method: "PUT",
+          body: JSON.stringify(newFactor),
+          headers: new Headers({ "Content-Type": "application/json" }),
+        }
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["decision", decisionId] });
+    },
+  });
+
+  return { createFactor, ...rest };
 };

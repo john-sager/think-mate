@@ -3,7 +3,7 @@ import { filterfy } from "@/client/utils";
 import { Flex, For, VStack } from "@chakra-ui/react";
 import { FactorCard } from "../FactorCard/FactorCard";
 import { CreateFactorButton } from "../CreateFactorButton/CreateFactorButton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useCreateFactor } from "../decisionLab.hooks";
 
 interface Props {
   factors?: Factor[];
@@ -12,23 +12,7 @@ interface Props {
 }
 
 export const FactorEditor = ({ factors, onScoreChange, decisionId }: Props) => {
-  const queryClient = useQueryClient();
-
-  const { mutate: createFactor } = useMutation({
-    mutationFn: (newFactor: CreateFactorDto) => {
-      return fetch(
-        `http://localhost:3000/decisions/${decisionId}/createFactor`,
-        {
-          method: "PUT",
-          body: JSON.stringify(newFactor),
-          headers: new Headers({ "Content-Type": "application/json" }),
-        }
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["decision", decisionId] });
-    },
-  });
+  const { createFactor } = useCreateFactor(decisionId);
 
   const [pros, cons] = useMemo(
     () => (factors ? filterfy(factors, (f) => f.type === "pro") : [[], []]),
