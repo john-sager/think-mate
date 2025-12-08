@@ -1,5 +1,6 @@
 import { Card } from "@/client/components/Card/Card";
 import { LinkButton } from "@/client/components/LinkButton/LinkButton";
+import { CardDescription } from "@chakra-ui/react";
 
 const decisionStatusMap: Record<DecisionStatus, string> = {
   decidedFor: "decided in favor of",
@@ -19,7 +20,6 @@ const DecisionCard = ({ decision }: DecisionCardProps) => {
   return (
     <Card
       title={title}
-      body={bodyText}
       footer={
         <LinkButton
           to="/decision/$decisionId"
@@ -29,7 +29,9 @@ const DecisionCard = ({ decision }: DecisionCardProps) => {
           }
         />
       }
-    />
+    >
+      <CardDescription>{bodyText}</CardDescription>
+    </Card>
   );
 };
 

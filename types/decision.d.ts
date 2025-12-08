@@ -8,11 +8,13 @@ interface Decision {
   score: number;
 }
 
+type FactorType = "pro" | "con";
+
 interface Factor {
   id: string;
   name: string;
   description: string;
-  type: "pro" | "con";
+  type: FactorType;
   score: number;
 }
 

@@ -1,61 +1,53 @@
-import { useMemo, useState } from "react";
-import { FactorCard } from "../FactorCard/FactorCard";
+import { useEffect, useMemo, useState } from "react";
 import { filterfy } from "@/client/utils";
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Flex, For, VStack } from "@chakra-ui/react";
+import { FactorCard } from "../FactorCard/FactorCard";
 import { CreateFactorButton } from "../CreateFactorButton/CreateFactorButton";
 
 export const FactorEditor = ({
-  onCountChange,
+  onScoreChange,
 }: {
-  onCountChange: (total: number) => void;
+  onScoreChange: (total: number) => void;
 }) => {
-  const [factors, setFactors] = useState<Factor[]>([
-    {
-      id: "1",
-      name: "hello",
-      description: "description here",
-      type: "pro",
-      score: 3,
-    },
-    {
-      id: "2",
-      name: "hello",
-      description: "description here",
-      type: "con",
-      score: 3,
-    },
-    {
-      id: "3",
-      name: "test",
-      description: "description here",
-      type: "pro",
-      score: 5,
-    },
-  ]);
+  const [factors, setFactors] = useState<Factor[]>([]);
 
   const [pros, cons] = useMemo(
     () => filterfy(factors, (f) => f.type === "pro"),
     [factors]
   );
 
-  const handleCountChange = (newCount: number) => {
-    onCountChange(newCount);
+  useEffect(() => {
+    const newTotal = factors.reduce(
+      (acc, factor) =>
+        (acc += factor.type === "pro" ? factor.score : factor.score * -1),
+      0
+    );
+    onScoreChange(newTotal);
+  }, [factors, onScoreChange]);
+
+  const handleSubmit = (title: string, factorType: FactorType) => {
+    if (title) {
+      const newFactor: Factor = {
+        id: "123",
+        name: title,
+        description: "test description",
+        type: factorType,
+        score: 1,
+      };
+      setFactors((prev) => [...prev, newFactor]);
+    }
   };
 
   return (
     <Flex justifyContent="space-around">
-      <Box>
-        <CreateFactorButton factorType="pro" onSubmit={() => null} />
-        {pros.map((p) => (
-          <FactorCard factor={p} />
-        ))}
-      </Box>
-      <Box>
-        <CreateFactorButton factorType="con" onSubmit={() => null} />
-        {cons.map((c) => (
-          <FactorCard factor={c} />
-        ))}
-      </Box>
+      <VStack gap={4}>
+        <CreateFactorButton factorType="pro" onSubmit={handleSubmit} />
+        <For each={pros}>{(p) => <FactorCard factor={p} key={p.id} />}</For>
+      </VStack>
+      <VStack gap={4}>
+        <CreateFactorButton factorType="con" onSubmit={handleSubmit} />
+        <For each={cons}>{(c) => <FactorCard factor={c} key={c.id} />}</For>
+      </VStack>
     </Flex>
   );
 };

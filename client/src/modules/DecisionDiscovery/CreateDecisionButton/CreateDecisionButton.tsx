@@ -22,6 +22,7 @@ export const CreateDecisionButton = ({
   const handleSubmit = () => {
     if (title) {
       onSubmit(title);
+      setTitle(null);
       setOpen(false);
     }
   };

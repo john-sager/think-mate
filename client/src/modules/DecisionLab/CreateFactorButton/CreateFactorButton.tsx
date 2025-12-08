@@ -5,8 +5,8 @@ import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
 interface CreateFactorButtonProps {
-  onSubmit: (newTitle: string) => void;
-  factorType: "pro" | "con";
+  onSubmit: (newTitle: string, factorType: FactorType) => void;
+  factorType: FactorType;
 }
 
 export const CreateFactorButton = ({
@@ -14,7 +14,7 @@ export const CreateFactorButton = ({
   factorType,
 }: CreateFactorButtonProps) => {
   const [open, setOpen] = usePopoverControls();
-  const [title, setTitle] = useState<string | null>(null);
+  const [title, setTitle] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
@@ -22,7 +22,8 @@ export const CreateFactorButton = ({
 
   const handleSubmit = () => {
     if (title) {
-      onSubmit(title);
+      onSubmit(title, factorType);
+      setTitle("");
       setOpen(false);
     }
   };
@@ -38,6 +39,7 @@ export const CreateFactorButton = ({
         placeholder={`Title of your ${factorType}`}
         size="xs"
         onChange={handleInputChange}
+        value={title}
       />
       <Button size="xs" onClick={handleSubmit} aria-label="Add" variant="ghost">
         <FiPlus />
