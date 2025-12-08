@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { FactorCard } from "../FactorCard/FactorCard";
 import { filterfy } from "@/client/utils";
 import { Box, Button, Flex } from "@chakra-ui/react";
+import { CreateFactorButton } from "../CreateFactorButton/CreateFactorButton";
 
 export const FactorEditor = ({
   onCountChange,
@@ -44,13 +45,13 @@ export const FactorEditor = ({
   return (
     <Flex justifyContent="space-around">
       <Box>
-        <Button> Add a pro </Button>
+        <CreateFactorButton factorType="pro" onSubmit={() => null} />
         {pros.map((p) => (
           <FactorCard factor={p} />
         ))}
       </Box>
       <Box>
-        <Button> Add a con </Button>
+        <CreateFactorButton factorType="con" onSubmit={() => null} />
         {cons.map((c) => (
           <FactorCard factor={c} />
         ))}
