@@ -1,6 +1,9 @@
-import { Button, HStack, Input, Popover, Portal } from "@chakra-ui/react";
 import { useState } from "react";
 import { FiPlus } from "react-icons/fi";
+import { Button, Input } from "@chakra-ui/react";
+
+import { PopoverButton } from "@/client/components/PopoverButton/PopoverButton";
+import { usePopoverControls } from "@/client/components/PopoverButton/popoverButton.hooks";
 
 interface CreateDecisionButtonProps {
   onSubmit: (newTitle: string) => void;
@@ -10,7 +13,7 @@ export const CreateDecisionButton = ({
   onSubmit,
 }: CreateDecisionButtonProps) => {
   const [title, setTitle] = useState<string | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = usePopoverControls();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
@@ -24,39 +27,27 @@ export const CreateDecisionButton = ({
   };
 
   return (
-    <Popover.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
-      <Popover.Trigger asChild>
-        <Button size="xs" colorPalette="blue">
-          Add new decision
+    <>
+      <PopoverButton
+        buttonTitle="Add new decision"
+        popoverTitle="Create new decision"
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <Input
+          placeholder="Title of your decision"
+          size="xs"
+          onChange={handleInputChange}
+        />
+        <Button
+          size="xs"
+          onClick={handleSubmit}
+          aria-label="Add"
+          variant="ghost"
+        >
+          <FiPlus />
         </Button>
-      </Popover.Trigger>
-      <Portal>
-        <Popover.Positioner>
-          <Popover.Content>
-            <Popover.Arrow />
-            <Popover.Body>
-              <Popover.Title fontWeight="medium" mb={2}>
-                Create new decision
-              </Popover.Title>
-              <HStack>
-                <Input
-                  placeholder="Title of your decision"
-                  size="xs"
-                  onChange={handleInputChange}
-                />
-                <Button
-                  size="xs"
-                  onClick={handleSubmit}
-                  aria-label="Add"
-                  variant="ghost"
-                >
-                  <FiPlus />
-                </Button>
-              </HStack>
-            </Popover.Body>
-          </Popover.Content>
-        </Popover.Positioner>
-      </Portal>
-    </Popover.Root>
+      </PopoverButton>
+    </>
   );
 };
