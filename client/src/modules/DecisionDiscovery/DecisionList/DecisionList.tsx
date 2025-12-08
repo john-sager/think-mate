@@ -1,4 +1,4 @@
-import { For, Box } from "@chakra-ui/react";
+import { For, VStack } from "@chakra-ui/react";
 import DecisionCard from "../DecisionCard/DecisionCard";
 
 interface DecisionListProps {
@@ -6,13 +6,9 @@ interface DecisionListProps {
 }
 
 export const DecisionList = ({ decisions }: DecisionListProps) => (
-  <Box>
+  <VStack gap={4} w={320}>
     <For each={decisions}>
-      {(decision) => (
-        <Box mb={4} key={decision.id}>
-          <DecisionCard decision={decision} />
-        </Box>
-      )}
+      {(decision) => <DecisionCard decision={decision} key={decision.id} />}
     </For>
-  </Box>
+  </VStack>
 );

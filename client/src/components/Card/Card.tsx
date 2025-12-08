@@ -7,15 +7,13 @@ type ButtonFooter =
 
 interface CardProps {
   title?: string;
-  body: React.ReactNode;
+  children: React.ReactNode; // the body of card
   footer?: ButtonFooter;
 }
-export const Card = ({ title, body, footer }: CardProps) => (
+export const Card = ({ title, children, footer }: CardProps) => (
   <ChakraCard.Root size="sm" maxW="sm" variant="elevated" shadow="lg">
     {title && <ChakraCard.Header>{title}</ChakraCard.Header>}
-    <ChakraCard.Body>
-      <ChakraCard.Description>{body}</ChakraCard.Description>
-    </ChakraCard.Body>
+    <ChakraCard.Body>{children}</ChakraCard.Body>
     {footer && <ChakraCard.Footer>{footer}</ChakraCard.Footer>}
   </ChakraCard.Root>
 );

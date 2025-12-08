@@ -1,19 +1,20 @@
-import { useState } from "react";
-import { FiPlus } from "react-icons/fi";
-import { Button, Input } from "@chakra-ui/react";
-
 import { PopoverButton } from "@/client/components/PopoverButton/PopoverButton";
 import { usePopoverControls } from "@/client/components/PopoverButton/popoverButton.hooks";
+import { Button, Input } from "@chakra-ui/react";
+import { useState } from "react";
+import { FiPlus } from "react-icons/fi";
 
-interface CreateDecisionButtonProps {
-  onSubmit: (newTitle: string) => void;
+interface CreateFactorButtonProps {
+  onSubmit: (newTitle: string, factorType: FactorType) => void;
+  factorType: FactorType;
 }
 
-export const CreateDecisionButton = ({
+export const CreateFactorButton = ({
   onSubmit,
-}: CreateDecisionButtonProps) => {
-  const [title, setTitle] = useState<string | null>(null);
+  factorType,
+}: CreateFactorButtonProps) => {
   const [open, setOpen] = usePopoverControls();
+  const [title, setTitle] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
@@ -21,23 +22,24 @@ export const CreateDecisionButton = ({
 
   const handleSubmit = () => {
     if (title) {
-      onSubmit(title);
-      setTitle(null);
+      onSubmit(title, factorType);
+      setTitle("");
       setOpen(false);
     }
   };
 
   return (
     <PopoverButton
-      buttonTitle="Add new decision"
-      popoverTitle="Create new decision"
+      buttonTitle={`Add a ${factorType}`}
+      popoverTitle={`Add new ${factorType}`}
       open={open}
       onOpenChange={setOpen}
     >
       <Input
-        placeholder="Title of your decision"
+        placeholder={`Title of your ${factorType}`}
         size="xs"
         onChange={handleInputChange}
+        value={title}
       />
       <Button size="xs" onClick={handleSubmit} aria-label="Add" variant="ghost">
         <FiPlus />

@@ -6,16 +6,20 @@ import { omitId } from "@/client/utils";
 
 interface DecisionEditorProps {
   decision: Decision;
+  totalScore: number;
 }
 
-export const DecisionEditor = ({ decision }: DecisionEditorProps) => {
+export const DecisionEditor = ({
+  decision,
+  totalScore,
+}: DecisionEditorProps) => {
   const { updateDecision } = useUpdateDecision(decision.id);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedDec, setEditedDec] = useState<UpdateDecisionDto>(
     omitId(decision)
   );
 
-  const { title, description, score, status } = editedDec;
+  const { title, description, status } = editedDec;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
@@ -74,7 +78,7 @@ export const DecisionEditor = ({ decision }: DecisionEditorProps) => {
       <Text>Description: {description}</Text>
       <HStack gap={4}>
         <Text>Status: {status}</Text>
-        <Text>Score: {score}</Text>
+        <Text>Score: {totalScore}</Text>
       </HStack>
     </VStack>
   );
