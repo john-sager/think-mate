@@ -1,40 +1,42 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { filterfy } from "@/client/utils";
 import { Flex, For, VStack } from "@chakra-ui/react";
 import { FactorCard } from "../FactorCard/FactorCard";
 import { CreateFactorButton } from "../CreateFactorButton/CreateFactorButton";
+import { useCreateFactor } from "../decisionLab.hooks";
 
-export const FactorEditor = ({
-  onScoreChange,
-}: {
+interface Props {
+  factors?: Factor[];
   onScoreChange: (total: number) => void;
-}) => {
-  const [factors, setFactors] = useState<Factor[]>([]);
+  decisionId: string;
+}
+
+export const FactorEditor = ({ factors, onScoreChange, decisionId }: Props) => {
+  const { createFactor } = useCreateFactor(decisionId);
 
   const [pros, cons] = useMemo(
-    () => filterfy(factors, (f) => f.type === "pro"),
+    () => (factors ? filterfy(factors, (f) => f.type === "pro") : [[], []]),
     [factors]
   );
 
   useEffect(() => {
-    const newTotal = factors.reduce(
-      (acc, factor) =>
-        (acc += factor.type === "pro" ? factor.score : factor.score * -1),
-      0
-    );
+    const newTotal = factors
+      ? factors.reduce(
+          (acc, factor) =>
+            (acc += factor.type === "pro" ? factor.score : factor.score * -1),
+          0
+        )
+      : 0;
     onScoreChange(newTotal);
   }, [factors, onScoreChange]);
 
   const handleSubmit = (title: string, factorType: FactorType) => {
     if (title) {
-      const newFactor: Factor = {
-        id: "123",
-        name: title,
-        description: "test description",
+      const newFactor: CreateFactorDto = {
+        title,
         type: factorType,
-        score: 1,
       };
-      setFactors((prev) => [...prev, newFactor]);
+      createFactor(newFactor);
     }
   };
 

@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { FactorEntity } from '../factors/factors.entity';
 
 // const DECISION_STATUSES = [
 //   'undecided',
@@ -10,6 +11,9 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 export class DecisionEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @OneToMany(() => FactorEntity, (factor) => factor.decision)
+  factors: Factor[];
 
   @Column()
   title: string;

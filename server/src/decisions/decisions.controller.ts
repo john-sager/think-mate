@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { DecisionsService } from './decisions.service';
+import { FactorsService } from '../factors/factors.service';
 
 class CreateDecisionDto {
   title: string;
@@ -7,7 +8,10 @@ class CreateDecisionDto {
 
 @Controller('decisions')
 export class DecisionsController {
-  constructor(private decisionsService: DecisionsService) {}
+  constructor(
+    private decisionsService: DecisionsService,
+    private factorsService: FactorsService,
+  ) {}
 
   @Get()
   async findAll(): Promise<Decision[]> {
@@ -29,5 +33,21 @@ export class DecisionsController {
     @Body() dec: UpdateDecisionDto,
   ): Promise<void> {
     await this.decisionsService.update(id, dec);
+  }
+
+  @Put(':id/createFactor')
+  async createFactor(
+    @Param('id') id: string,
+    @Body() factor: CreateFactorDto,
+  ): Promise<void> {
+    await this.factorsService.create(id, factor.title, factor.type);
+  }
+
+  @Put(':id')
+  async updateFactor(
+    @Param('id') id: string,
+    @Body() factor: UpdateFactorDto,
+  ): Promise<void> {
+    await this.factorsService.update(id, factor);
   }
 }

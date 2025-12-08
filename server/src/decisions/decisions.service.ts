@@ -17,7 +17,10 @@ export class DecisionsService {
   }
 
   async findOne(id: string): Promise<Decision | null> {
-    const dbDecision = await this.decisionRepository.findOneBy({ id });
+    const dbDecision = await this.decisionRepository.findOne({
+      where: { id },
+      relations: ['factors'],
+    });
 
     return dbDecision ? this.toDecision(dbDecision) : null;
   }
@@ -37,6 +40,7 @@ export class DecisionsService {
   }
 
   private toDecision(dbDec: DecisionEntity): Decision {
+    console.dir(dbDec);
     return {
       ...dbDec,
     };
