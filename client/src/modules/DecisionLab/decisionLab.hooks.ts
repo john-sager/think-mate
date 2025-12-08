@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useUpdateDecision = (id: string) => {
   const { mutate, ...mutation } = useMutation({
@@ -12,4 +12,15 @@ export const useUpdateDecision = (id: string) => {
   });
 
   return { updateDecision: mutate, ...mutation };
+};
+
+export const useQueryDecisionById = (id: string) => {
+  return useQuery<Decision | null>({
+    queryKey: ["decision", id],
+    queryFn: async () => {
+      const response = await fetch(`http://localhost:3000/decisions/${id}`);
+      const data = await response.json();
+      return data;
+    },
+  });
 };

@@ -1,32 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 import { decisionLabRoute } from "@/client/app/routes";
 
 import { DecisionEditor } from "./DecisionEditor/DecisionEditor";
 import { FactorEditor } from "./FactorEditor/FactorEditor";
-import { useState } from "react";
+import { useQueryDecisionById } from "./decisionLab.hooks";
 
 const DecisionLab = () => {
   const { decisionId } = decisionLabRoute.useParams();
   const [totalScore, setTotalScore] = useState<number>(0);
 
-  const { data } = useQuery<Decision | null>({
-    queryKey: ["decisions", decisionId],
-    queryFn: async () => {
-      const response = await fetch(
-        `http://localhost:3000/decisions/${decisionId}`
-      );
-      const data = await response.json();
-      return data;
-    },
-  });
+  const { data: decision } = useQueryDecisionById(decisionId);
 
-  if (!data) return null;
+  if (!decision) return null;
 
   return (
     <>
-      <DecisionEditor decision={data} totalScore={totalScore} />
-      <FactorEditor onScoreChange={(newTotal) => setTotalScore(newTotal)} />
+      <DecisionEditor decision={decision} totalScore={totalScore} />
+      <FactorEditor
+        onScoreChange={(newTotal) => setTotalScore(newTotal)}
+        factors={decision.factors}
+        decisionId={decisionId}
+      />
     </>
   );
 };

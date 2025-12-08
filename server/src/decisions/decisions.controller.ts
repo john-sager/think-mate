@@ -35,6 +35,14 @@ export class DecisionsController {
     await this.decisionsService.update(id, dec);
   }
 
+  @Put(':id/createFactor')
+  async createFactor(
+    @Param('id') id: string,
+    @Body() factor: CreateFactorDto,
+  ): Promise<void> {
+    await this.factorsService.create(id, factor.title, factor.type);
+  }
+
   @Put(':id')
   async updateFactor(
     @Param('id') id: string,
