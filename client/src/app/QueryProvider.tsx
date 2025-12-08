@@ -1,11 +1,13 @@
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { API } from "../envVars";
 
 const defaultQueryFn = async ({
   queryKey,
 }: {
   queryKey: readonly unknown[];
 }) => {
-  const response = await fetch(`http://localhost:3000/${queryKey[0]}`);
+  console.log(API);
+  const response = await fetch(`${API}/${queryKey[0]}`);
   const data = await response.json();
   return data;
 };

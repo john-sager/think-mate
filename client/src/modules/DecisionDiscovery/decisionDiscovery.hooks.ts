@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import { API } from "@/client/envVars";
+
 export const useQueryDecisions = () => {
   const { data, ...rest } = useQuery<Decision[]>({
     queryKey: ["decisions"],
@@ -13,7 +15,7 @@ export const useCreateDecision = () => {
 
   const { mutate, ...mutation } = useMutation({
     mutationFn: (newDecision: CreateDecisionDto) => {
-      return fetch(`http://localhost:3000/decisions`, {
+      return fetch(`${API}/decisions`, {
         method: "POST",
         body: JSON.stringify(newDecision),
         headers: new Headers({ "Content-Type": "application/json" }),
